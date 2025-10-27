@@ -1,0 +1,31 @@
+# Gradle
+/build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+bin/
+
+# IntelliJ (Old)
+out/
+
+# Logs & Temp
+*.log
+*.tmp
+*.out
+logs/
+
+#  IDE & OS
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+#  Secrets
+.env
+application-local.yml
+application-local.properties
+application-secret.yml
+application-secret.properties
