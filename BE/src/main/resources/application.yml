@@ -1,0 +1,10 @@
+# DB ?? ? ?? ??? ?? ??
+# Spring Boot? DB ?? ??(JDBC, JPA)? ???? ?? ?? ??? HikariDataSource, Hibernate? ???? ??
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+server:
+  port: 8080
