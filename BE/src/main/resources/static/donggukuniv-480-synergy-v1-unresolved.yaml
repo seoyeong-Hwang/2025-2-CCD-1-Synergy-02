@@ -31,6 +31,24 @@ components:
           type: string
           example: "01012341234"
       required: [name, birth, call]
+      
+    SignUpRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 홍길동
+        birth:
+          type: string
+          example: "1960-01-01"
+        call:
+          type: string
+          example: "01012341234"
+        fcm:
+          type: string
+          example: "dR1zXK..."
+      required: [name, birth, call, fcm]
+        
     
     SignupMedicationTimeRequest:
       type: object
@@ -581,6 +599,44 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ReportListItem'
+                
+    ReportSummaryResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/SuccessHeader'
+        body:
+          type: object
+          properties:
+            rno:
+              type: integer
+              example: 35
+            hospital:
+              type: string
+              example: "하늘병원"
+            category:
+              type: string
+              example: "감기약"
+            taken:
+              type: integer
+              example: 2
+            start_date:
+              type: string
+              example: "2025-10-01"
+            end_date:
+              type: string
+              example: "2025-10-05"
+            colors:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    example: "2025-10-01"
+                  color:
+                    type: string
+                    example: "g"
 
     ReportDetailResponse:
       type: object
@@ -811,17 +867,22 @@ paths:
     post:
       tags: [User]
       summary: "[1단계] 회원가입 - 사용자 정보 등록"
-      description: "신규 사용자 정보를 등록하고 uno를 반환받습니다."
+      description: "신규 사용자 정보를 등록하고 jwt 토큰과 uno를 반환받습니다."
       security: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthRequest'
+              $ref: '#/components/schemas/SignUpRequest'
       responses:
         "201":
           description: 회원가입 1단계 성공
+          headers:
+            Authorization:
+              description: "Bearer {access_token}"
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -1368,6 +1429,32 @@ paths:
                 $ref: '#/components/schemas/ReportListResponse'
         "401":
           $ref: '#/components/responses/401'
+        "500":
+          $ref: '#/components/responses/500'
+          
+  /users/me/reports/{rno}/summary:
+    get:
+      tags: [Report]
+      summary: 내 리포트 요약 조회
+      description: "특정 리포트(rno)의 요약 내용을 조회합니다."
+      parameters:
+        - name: rno
+          in: path
+          description: "조회할 리포트의 고유 ID"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "리포트 요약 조회 성공"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportSummaryResponse'
+        "401":
+          $ref: '#/components/responses/401'
+        "404":
+          $ref: '#/components/responses/404'
         "500":
           $ref: '#/components/responses/500'
 
