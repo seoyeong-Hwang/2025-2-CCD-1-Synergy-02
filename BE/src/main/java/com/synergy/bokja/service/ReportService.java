@@ -19,6 +19,12 @@ public class ReportService {
     private final CycleRepository cycleRepository;
     private final UserMedicineItemRepository userMedicineItemRepository;
 
+    public Long findUmno(Long uno){
+        UserMedicineEntity userMedicine = userMedicineRepository.findByUno(uno);
+        Long umno = userMedicine.getUmno();
+        return umno;
+    }
+
     public ReportListResponseDTO getUserReports(Long umno) {
         List<ReportEntity> reports = reportRepository.findAllByUmno(umno);
 
