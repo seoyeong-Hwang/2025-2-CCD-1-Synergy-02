@@ -22,6 +22,6 @@ public class UserMedicineItemEntity {
     @Column(nullable = false)
     private Long mdno;
 
-    @Column
-    private Integer description;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 }

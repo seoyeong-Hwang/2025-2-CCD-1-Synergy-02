@@ -1,11 +1,17 @@
 package com.synergy.bokja.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "user_table")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter @Setter
 public class UserEntity {
 
     @Id
@@ -18,7 +24,7 @@ public class UserEntity {
     @Column(nullable = false)
     private LocalDate birth;
 
-    @Column(name = "call", nullable = false, length = 11)
+    @Column(nullable = false, length = 11)
     private String phone;
 
     @Column(name = "is_active", nullable = false)
@@ -33,28 +39,6 @@ public class UserEntity {
     @Column(name = "inactive_date")
     private LocalDateTime inactiveDate;
 
-    // getter / setter
-    public Long getUno() { return uno; }
-    public void setUno(Long uno) { this.uno = uno; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public LocalDate getBirth() { return birth; }
-    public void setBirth(LocalDate birth) { this.birth = birth; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public Boolean getIsActive() { return isActive; }
-    public void setIsActive(Boolean isActive) { this.isActive = isActive; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
-
-    public LocalDateTime getInactiveDate() { return inactiveDate; }
-    public void setInactiveDate(LocalDateTime inactiveDate) { this.inactiveDate = inactiveDate; }
+    @Column(name = "fcm_token")
+    private String fcmToken;
 }

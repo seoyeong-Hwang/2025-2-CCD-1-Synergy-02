@@ -15,6 +15,6 @@ public class TestController {
     @GetMapping("/hello")
     public String hello() {
         UserEntity user = userRepository.findByUno(1L);
-        return "복자 서버 정상 작동 중 " + user.getName();
+        return "복자 서버 정상 작동 중 ";
     }
 }

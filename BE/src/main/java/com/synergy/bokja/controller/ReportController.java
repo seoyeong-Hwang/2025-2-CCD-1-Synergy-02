@@ -21,14 +21,16 @@ public class ReportController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("")
-    public ResponseEntity<?> getUserReports(@RequestHeader("Authorization") String token,
-                                            @RequestParam("umno") Long umno) {
+    public ResponseEntity<?> getUserReports(@RequestHeader("Authorization") String token) {
         String jwtToken = token.replace("Bearer ", "");
         if (!jwtTokenProvider.validateToken(jwtToken)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid or expired token");
         }
 
         Long uno = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Long umno = reportService.findUmno(uno);
+
         ReportListResponseDTO result = reportService.getUserReports(umno);
         BaseResponse<ReportListResponseDTO> response =
                 new BaseResponse<>(1000, "리포트 목록 조회 성공", result);
